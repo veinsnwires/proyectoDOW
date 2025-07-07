@@ -10,6 +10,7 @@ export const getArriendosActivos = async (
         const arriendosActivos = await Arriendo.findAll({
             where: { fechaFin: null },
         });
+        await new Promise(resolve => setTimeout(resolve, 2000));
         response.json({ data: arriendosActivos });
     } catch (error) {
         console.error('Error al obtener los arriendos activos:', error);

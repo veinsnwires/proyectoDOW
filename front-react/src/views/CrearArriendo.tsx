@@ -1,4 +1,20 @@
-import { Link } from 'react-router-dom';
+import {
+    Form,
+    Link,
+    redirect,
+    type ActionFunctionArgs,
+} from 'react-router-dom';
+import { arriendoCrear } from '../services/ArriendoService';
+
+export async function action({ request }: ActionFunctionArgs) {
+    const formData = Object.fromEntries(await request.formData());
+    console.log('FORM DATA:', formData);
+    const resultado = await arriendoCrear(formData);
+    if (!resultado?.success) {
+        return resultado;
+    }
+    return redirect('/activos');
+}
 
 export default function CrearArriendo() {
     return (
@@ -34,7 +50,7 @@ export default function CrearArriendo() {
             </div>
             <div className="card">
                 <div className="card-body">
-                    <form>
+                    <Form method="POST">
                         <div className="mb-3">
                             <label
                                 className="form-label"
@@ -85,13 +101,15 @@ export default function CrearArriendo() {
                                 className="form-select"
                                 id="tipoVehiculo"
                                 name="tipoVehiculo"
+                                defaultValue=""
+                                required
                             >
-                                <option selected>
+                                <option value="" disabled>
                                     Ingresar tipo de vehículo
                                 </option>
-                                <option value="1">Sedan</option>
-                                <option value="2">SUV</option>
-                                <option value="3">Camioneta</option>
+                                <option value="Sedan">Sedan</option>
+                                <option value="SUV">SUV</option>
+                                <option value="Camioneta">Camioneta</option>
                             </select>
                         </div>
                         <div className="mb-3 text-end">
@@ -105,7 +123,7 @@ export default function CrearArriendo() {
                                 Generar Arriendo
                             </button>
                         </div>
-                    </form>
+                    </Form>
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 import { useLoaderData } from 'react-router-dom';
 import { getArriendosActivos } from '../services/ArriendoService';
 import type { ArriendoSchema } from '../types/arriendo';
+import ArriendoFila from '../components/ArriendoFila';
 
 export async function loader() {
     console.log('Llamando a getArriendosActivos');
@@ -47,20 +48,22 @@ export default function ArriendosActivos() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="text-center">1</td>
-                            <td className="text-center">24-06-25</td>
-                            <td className="text-center"></td>
-                            <td className="text-center">DGBZ32</td>
-                            <td className="text-center">SUV</td>
-                            <td className="text-center">16365063-0</td>
-                            <td className="text-center">Jorge Gonzalez</td>
-                            <td className="text-center">
-                                <button className="btn btn-sm btn-success me-1">
-                                    <i className="bi bi-calendar-check"></i>
-                                </button>
-                            </td>
-                        </tr>
+                        {activos.length === 0 ? (
+                            <tr>
+                                <td colSpan={8} className="text-center">
+                                    No hay arriendos activos
+                                </td>
+                            </tr>
+                        ) : (
+                            activos.map((arriendo, index) => (
+                                <ArriendoFila
+                                    key={arriendo.id}
+                                    index={index}
+                                    arriendo={arriendo}
+                                    modo={'finalizar'}
+                                />
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>

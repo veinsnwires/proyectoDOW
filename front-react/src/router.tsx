@@ -4,16 +4,22 @@ import Home from './views/Home';
 import ArriendosActivos, {
     loader as loaderActivos,
 } from './views/ArriendosActivos';
+import ArriendosFinalizados, {
+    loader as loaderFinalizados,
+} from './views/ArriendosFinalizados';
 import Login from './views/Login';
 import ArriendosPorCategorias from './views/ArriendosPorCategorias';
-import CrearArriendo from './views/CrearArriendo';
-import ArriendosFinalizados from './views/ArriendosFinalizados';
+import CrearArriendo, {
+    action as actionCrearArriendo,
+} from './views/CrearArriendo';
+import Loader from './components/Loader';
 
 export const router = createBrowserRouter([
     {
         //URL RAIZ DEL SITIO
         path: '/',
         element: <Layout />,
+        HydrateFallback: Loader,
         //Las vistas que tendrá este layout
         children: [
             {
@@ -36,10 +42,12 @@ export const router = createBrowserRouter([
             {
                 path: 'finalizados',
                 element: <ArriendosFinalizados />,
+                loader: loaderFinalizados,
             },
             {
                 path: 'nuevoarriendo',
                 element: <CrearArriendo />,
+                action: actionCrearArriendo,
             },
         ],
     },

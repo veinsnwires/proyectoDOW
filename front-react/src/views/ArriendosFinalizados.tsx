@@ -1,4 +1,18 @@
+import { useLoaderData } from 'react-router-dom';
+import { getArriendosFinalizados } from '../services/ArriendoService';
+import type { ArriendoSchema } from '../types/arriendo';
+import ArriendoFila from '../components/ArriendoFila';
+
+export async function loader() {
+    console.log('Llamando a getArriendosFinalizados');
+    const finalizados = await getArriendosFinalizados();
+    console.log('Finalizados en loader:', finalizados);
+    return finalizados;
+}
+
 export default function ArriendosFinalizados() {
+    const finalizados = useLoaderData() as ArriendoSchema[];
+    console.log(finalizados);
     return (
         <div className="container-fluid">
             <h2>Arriendos Finalizados</h2>
@@ -34,20 +48,22 @@ export default function ArriendosFinalizados() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td className="text-center">1</td>
-                            <td className="text-center">24-06-25</td>
-                            <td className="text-center">28-06-25</td>
-                            <td className="text-center">DGBZ32</td>
-                            <td className="text-center">SUV</td>
-                            <td className="text-center">16365063-0</td>
-                            <td className="text-center">Jorge Gonzalez</td>
-                            <td className="text-center">
-                                <button className="btn btn-sm btn-danger me-1">
-                                    <i className="bi bi-trash3"></i>
-                                </button>
-                            </td>
-                        </tr>
+                        {finalizados.length === 0 ? (
+                            <tr>
+                                <td colSpan={8} className="text-center">
+                                    No hay arriendos activos
+                                </td>
+                            </tr>
+                        ) : (
+                            finalizados.map((arriendo, index) => (
+                                <ArriendoFila
+                                    key={arriendo.id}
+                                    index={index}
+                                    arriendo={arriendo}
+                                    modo={'eliminar'}
+                                />
+                            ))
+                        )}
                     </tbody>
                 </table>
             </div>

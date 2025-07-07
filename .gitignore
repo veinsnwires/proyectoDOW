@@ -1,0 +1,35 @@
+# ==== Ignorar node_modules en ambas carpetas ====
+api/node_modules/
+frontend/node_modules/
+
+# ==== Ignorar .env de backend ====
+api/.env
+
+# ==== Ignorar dist de frontend ====
+frontend/dist/
+frontend/dist-ssr/
+
+# ==== Logs generales ====
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ==== Archivos locales o del sistema ====
+*.local
+.DS_Store
+
+# ==== Configuración de editores ====
+.vscode/
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ==== Ignorar extensiones específicas ====
+!.vscode/extensions.json
