@@ -10,7 +10,6 @@ export const getArriendosActivos = async (
         const arriendosActivos = await Arriendo.findAll({
             where: { fechaFin: null },
         });
-        await new Promise(resolve => setTimeout(resolve, 2000));
         response.json({ data: arriendosActivos });
     } catch (error) {
         console.error('Error al obtener los arriendos activos:', error);
@@ -45,17 +44,22 @@ export const getArriendosPorCategoria = async (
     try {
         const resumen = await Arriendo.findAll({
             attributes: [
-                'tipoVehiculo',
+                ['tipo_vehiculo', 'tipoVehiculo'],
                 [
                     Sequelize.fn('COUNT', Sequelize.col('id')),
                     'cantidadArriendos',
                 ],
             ],
-            group: ['tipoVehiculo'],
-            order: [['tipoVehiculo', 'ASC']],
+            group: ['tipo_vehiculo'],
+            order: [['tipo_vehiculo', 'ASC']],
         });
 
-        response.json({ data: resumen });
+        console.log(
+            'Resumen de arriendos por categoría:',
+            resumen.map(r => r.toJSON())
+        );
+
+        response.json(resumen.map(r => r.toJSON())); // <- aquí
     } catch (error) {
         console.error('Error al obtener arriendos por categoría:', error);
         response

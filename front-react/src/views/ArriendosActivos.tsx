@@ -2,6 +2,7 @@ import { useLoaderData } from 'react-router-dom';
 import { getArriendosActivos } from '../services/ArriendoService';
 import type { ArriendoSchema } from '../types/arriendo';
 import ArriendoFila from '../components/ArriendoFila';
+import '../css/Activos.css';
 
 export async function loader() {
     console.log('Llamando a getArriendosActivos');
@@ -14,17 +15,19 @@ export default function ArriendosActivos() {
     const activos = useLoaderData() as ArriendoSchema[];
     console.log(activos);
     return (
-        <div className="container-fluid">
-            <h2>Arriendos Activos</h2>
+        <div className="activos-bg container-fluid">
+            <h2 className="text-white p-2 rounded">Arriendos Activos</h2>
             <div className="row">
                 <div className="col-8">
                     <nav aria-label="breadcrumb">
-                        <ol className="breadcrumb">
+                        <ol className="breadcrumb text-white">
                             <li className="breadcrumb-item">
-                                <a href="#">Inicio</a>
+                                <a href="#" className="text-white">
+                                    Inicio
+                                </a>
                             </li>
                             <li
-                                className="breadcrumb-item active"
+                                className="breadcrumb-item text-white active"
                                 aria-current="page"
                             >
                                 Activos

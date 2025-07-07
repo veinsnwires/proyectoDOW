@@ -7,8 +7,10 @@ import ArriendosActivos, {
 import ArriendosFinalizados, {
     loader as loaderFinalizados,
 } from './views/ArriendosFinalizados';
+import ArriendosPorCategorias, {
+    loader as loaderCategorias,
+} from './views/ArriendosPorCategorias';
 import Login from './views/Login';
-import ArriendosPorCategorias from './views/ArriendosPorCategorias';
 import CrearArriendo, {
     action as actionCrearArriendo,
 } from './views/CrearArriendo';
@@ -33,6 +35,7 @@ export const router = createBrowserRouter([
             {
                 path: 'arriendosporcategoria',
                 element: <ArriendosPorCategorias />,
+                loader: loaderCategorias,
             },
             {
                 path: 'activos',

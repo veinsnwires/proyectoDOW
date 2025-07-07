@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import type { FormEvent } from 'react';
-
+import '../css/Login.css';
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,32 +29,43 @@ export default function Login() {
     };
 
     return (
-        <div className="container mt-4">
-            <h2>Iniciar sesión</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group mb-2">
-                    <label>Email</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                    />
-                </div>
-                <div className="form-group mb-2">
-                    <label>Contraseña</label>
-                    <input
-                        type="password"
-                        className="form-control"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                    />
-                </div>
-                <button type="submit" className="btn btn-primary">
-                    Ingresar
-                </button>
-            </form>
-            {mensaje && <div className="mt-3 alert alert-info">{mensaje}</div>}
+        // 🔹 Fondo general con imagen (CSS en Login.css)
+        <div className="login-bg d-flex justify-content-center align-items-center">
+            {/* 🔹 Card más chica, centrada */}
+            <div
+                className="bg-success text-white p-4 rounded shadow"
+                style={{ maxWidth: '400px', width: '100%' }}
+            >
+                <h2>Iniciar sesión</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group mb-2">
+                        <label>Email</label>
+                        <input
+                            type="email"
+                            className="form-control"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-group mb-2">
+                        <label>Contraseña</label>
+                        <input
+                            type="password"
+                            className="form-control"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <button type="submit" className="btn btn-light fw-bold">
+                        Ingresar
+                    </button>
+                </form>
+                {mensaje && (
+                    <div className="mt-3 alert alert-light text-dark">
+                        {mensaje}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

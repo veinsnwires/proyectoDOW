@@ -1,11 +1,17 @@
 import { Link } from 'react-router-dom';
+import '../css/NavBar.css';
 
 export default function NavBar() {
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary bg-light">
+        <nav className="navbar navbar-expand-lg navbar-bg-img">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">
-                    Sistema Vehículos
+                    <img
+                        src="/img/logoUSM.png" // Cambia esto por la ruta correcta de tu logo en la carpeta public
+                        alt="Logo Universidad"
+                        style={{ height: '80px', marginRight: '8px' }}
+                    />
+                    <span style={{ lineHeight: '80px' }}>Home</span>
                 </Link>
                 <button
                     className="navbar-toggler"

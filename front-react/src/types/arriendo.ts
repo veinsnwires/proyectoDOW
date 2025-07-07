@@ -18,6 +18,15 @@ export const ArriendoSchema = object({
     nombreCliente: string(),
 });
 
+export const ArriendoResumenSchema = object({
+    tipoVehiculo: string(),
+    cantidadArriendos: number(),
+});
+
+export const ArriendosResumenSchema = array(ArriendoResumenSchema);
+
+export type ArriendoResumenSchema = InferOutput<typeof ArriendoResumenSchema>;
+
 export const ArriendoFormSchema = object({
     fechaInicio: string(),
     fechaFin: optional(nullable(string())),

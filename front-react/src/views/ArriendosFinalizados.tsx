@@ -2,6 +2,7 @@ import { useLoaderData } from 'react-router-dom';
 import { getArriendosFinalizados } from '../services/ArriendoService';
 import type { ArriendoSchema } from '../types/arriendo';
 import ArriendoFila from '../components/ArriendoFila';
+import '../css/Finalizados.css';
 
 export async function loader() {
     console.log('Llamando a getArriendosFinalizados');
@@ -14,17 +15,19 @@ export default function ArriendosFinalizados() {
     const finalizados = useLoaderData() as ArriendoSchema[];
     console.log(finalizados);
     return (
-        <div className="container-fluid">
-            <h2>Arriendos Finalizados</h2>
+        <div className="finalizados-bg container-fluid">
+            <h2 className="text-white p-2 rounded">Arriendos Finalizados</h2>
             <div className="row">
                 <div className="col-8">
                     <nav aria-label="breadcrumb">
-                        <ol className="breadcrumb">
+                        <ol className="breadcrumb text-white">
                             <li className="breadcrumb-item">
-                                <a href="#">Inicio</a>
+                                <a href="#" className="text-white">
+                                    Inicio
+                                </a>
                             </li>
                             <li
-                                className="breadcrumb-item active"
+                                className="breadcrumb-item active text-white"
                                 aria-current="page"
                             >
                                 Finalizados
@@ -51,7 +54,7 @@ export default function ArriendosFinalizados() {
                         {finalizados.length === 0 ? (
                             <tr>
                                 <td colSpan={8} className="text-center">
-                                    No hay arriendos activos
+                                    No hay arriendos finalizados
                                 </td>
                             </tr>
                         ) : (

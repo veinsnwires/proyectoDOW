@@ -1,18 +1,42 @@
 import { Link } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
+import type { ArriendoResumenSchema } from '../types/arriendo';
+import { getArriendosPorCategoria } from '../services/ArriendoService';
+import '../css/Categorias.css';
+
+const categoriasFijas = ['Sedan', 'SUV', 'Camioneta'];
+
+export async function loader() {
+    const resumen = await getArriendosPorCategoria(); // resumen = array directo
+    console.log('Resumen desde loader:', resumen); // Este sí lo verás en consola
+    return resumen;
+}
 
 export default function ArriendosPorCategorias() {
+    const resumen = useLoaderData() as ArriendoResumenSchema[];
+    console.log('Resumen cargado:', resumen);
+    // Crear un objeto para acceso rápido a cantidad por categoría
+    const cantidadesMap =
+        resumen?.reduce<Record<string, number>>((acc, item) => {
+            acc[item.tipoVehiculo] = item.cantidadArriendos;
+            return acc;
+        }, {}) || {};
+
     return (
-        <div className="container-fluid">
-            <h2>Vista general de arriendos</h2>
+        <div className="categorias-bg container-fluid">
+            <h2 className="text-white p-2 rounded">
+                Resumen arriendos por Categoría
+            </h2>
+
             <div className="row">
                 <div className="col-8">
                     <nav aria-label="breadcrumb">
-                        <ol className="breadcrumb">
+                        <ol className="breadcrumb text-white">
                             <li className="breadcrumb-item">
-                                <a href="/">Inicio</a>
+                                <Link to="/">Inicio</Link>
                             </li>
                             <li
-                                className="breadcrumb-item active"
+                                className="breadcrumb-item active text-white"
                                 aria-current="page"
                             >
                                 Arriendos
@@ -26,27 +50,24 @@ export default function ArriendosPorCategorias() {
                     </Link>
                 </div>
             </div>
+
             <div className="table-responsive">
                 <table className="table table-bordered table-striped table-hover">
                     <thead className="table-dark">
                         <tr>
-                            <th>Tipo de vehículo</th>
-                            <th>Cantidad Productos</th>
+                            <th className="text-center">Tipo de vehículo</th>
+                            <th className="text-center">Cantidad</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Sedan</td>
-                            <td className="text-end">5</td>
-                        </tr>
-                        <tr>
-                            <td>SUV</td>
-                            <td className="text-end">5</td>
-                        </tr>
-                        <tr>
-                            <td>Camioneta</td>
-                            <td className="text-end">5</td>
-                        </tr>
+                        {categoriasFijas.map(categoria => (
+                            <tr key={categoria}>
+                                <td className="text-center">{categoria}</td>
+                                <td className="text-center">
+                                    {cantidadesMap[categoria] ?? 0}
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

@@ -1,5 +1,5 @@
 import loaderGif from '../assets/loader.gif';
-import './css/Loader.component.css';
+import '../css/Loader.component.css';
 
 export default function Loader() {
     return (

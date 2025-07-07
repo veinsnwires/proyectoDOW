@@ -1,0 +1,30 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+}
+.home-background {
+    background: url('/img/poke1.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.btn-bg-nuevo {
+    background-image: url('/img/button.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white !important;
+    border: none;
+    height: 80px;
+    width: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.navbar-bg-img {
+    background-image: url('/img/navbar.jpg'); /* Ajusta la ruta */
+    background-size: cover; /* Para que cubra todo el navbar */
+    background-repeat: no-repeat;
+    background-position: center;
+}

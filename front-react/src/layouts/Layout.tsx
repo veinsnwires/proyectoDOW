@@ -6,7 +6,7 @@ export default function Layout() {
             {/* NAVBAR */}
             <NavBar />
             {/* CONTENIDO PRINCIPAL DE LA PAGINA  */}
-            <main className="container-fluid">
+            <main className="container-fluid px-0">
                 <Outlet />
             </main>
         </>

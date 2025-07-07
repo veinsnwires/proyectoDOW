@@ -2,6 +2,7 @@ import { Sequelize } from 'sequelize-typescript';
 import dotenv from 'dotenv';
 import { Dialect } from 'sequelize';
 import Arriendo from '../models/Arriendo';
+import Usuario from '../models/Usuario';
 dotenv.config();
 
 const db = new Sequelize({
@@ -11,7 +12,7 @@ const db = new Sequelize({
     database: process.env.DB_NAME,
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    models: [Arriendo],
+    models: [Arriendo, Usuario],
     define: { timestamps: false },
 });
 

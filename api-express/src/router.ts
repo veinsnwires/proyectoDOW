@@ -1,27 +1,34 @@
-import { Router } from "express";
-import { login } from "./handlers/auth";
-import { cambiarPassword, nuevoUsuario } from "./handlers/usuarios";
-import { eliminarArriendo, finalizarArriendo, getArriendosActivos, getArriendosFinalizados, getArriendosPorCategoria, nuevoArriendo } from "./handlers/arriendos";
+import { Router } from 'express';
+import { login } from './handlers/usuarios';
+import { cambiarPassword, nuevoUsuario } from './handlers/usuarios';
+import {
+    eliminarArriendo,
+    finalizarArriendo,
+    getArriendosActivos,
+    getArriendosFinalizados,
+    getArriendosPorCategoria,
+    nuevoArriendo,
+} from './handlers/arriendos';
+import { verificarToken } from './middleware/verificarToken';
 
+const router = Router();
 
+//LOGIN
+router.post('/usuarios/login', login);
 
-const router = Router()
-
+//MIDDLEWARE PARA TODOS LOS ENDPOINTS SUBSIGUIENTES
+router.use(verificarToken);
 
 //ARRIENDOS
-router.get('/arriendos/activos', getArriendosActivos)
-router.get('/arriendos/finalizados', getArriendosFinalizados)
-router.get('/arriendos/resumen', getArriendosPorCategoria)
+router.get('/arriendos/activos', getArriendosActivos);
+router.get('/arriendos/finalizados', getArriendosFinalizados);
+router.get('/arriendos/resumen', getArriendosPorCategoria);
 router.post('/arriendos/nuevo', nuevoArriendo);
-router.put('/arriendos/devolver/:id', finalizarArriendo)
-router.delete('/arriendos/eliminar/:id', eliminarArriendo)
-//LOGIN
-router.post('/auth/login', login)
+router.put('/arriendos/devolver/:id', finalizarArriendo);
+router.delete('/arriendos/eliminar/:id', eliminarArriendo);
+
 //USUARIOS
-router.post('/usuarios/signup', nuevoUsuario)
-router.put('/usuarios/cambiar-password', cambiarPassword)
+router.post('/usuarios/signup', nuevoUsuario);
+router.put('/usuarios/cambiar-password', cambiarPassword);
 
-
-
-//REGISTER
-export default router
+export default router;

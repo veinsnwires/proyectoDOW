@@ -36,6 +36,17 @@ export async function getArriendosFinalizados() {
     }
 }
 
+export async function getArriendosPorCategoria() {
+    const response = await fetch('http://localhost:3000/api/arriendos/resumen');
+    if (!response.ok) {
+        throw new Error('No se pudo obtener el resumen');
+    }
+
+    const json = await response.json();
+
+    return json;
+}
+
 type ArriendoFormData = {
     [k: string]: FormDataEntryValue;
 };
