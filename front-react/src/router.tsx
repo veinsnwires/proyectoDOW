@@ -14,6 +14,7 @@ import CrearArriendo, {
     action as actionCrearArriendo,
 } from './views/CrearArriendo';
 import Login, { action as loginAction } from './views/Login';
+import Signup, { action as signupAction } from './views/Signup';
 import Loader from './components/Loader';
 import { PrivateRoute } from './components/PrivateRoute';
 
@@ -23,7 +24,11 @@ export const router = createBrowserRouter([
         element: <Login />,
         action: loginAction,
     },
-
+    {
+        path: 'signup',
+        element: <Signup />,
+        action: signupAction,
+    },
     {
         //URL RAIZ DEL SITIO
         path: '/',

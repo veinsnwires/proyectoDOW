@@ -3,23 +3,23 @@ import {
     useActionData,
     type ActionFunctionArgs,
     redirect,
-    Link,
 } from 'react-router-dom';
-import { login } from '../services/UsuarioService';
-import '../css/Login.css';
+import { signup } from '../services/UsuarioService';
+import '../css/Login.css'; // reutilizamos el mismo CSS para mantener estilo igual
 
 export async function action({ request }: ActionFunctionArgs) {
     const formData = Object.fromEntries(await request.formData());
-    const resultado = await login(formData);
+    const resultado = await signup(formData);
 
     if (!resultado.success) {
         return resultado;
     }
 
-    return redirect('/');
+    // Después de signup exitoso, podrías redirigir a login o directo al home
+    return redirect('/login');
 }
 
-export default function Login() {
+export default function Signup() {
     const actionData = useActionData() as {
         success?: boolean;
         error?: string;
@@ -39,7 +39,7 @@ export default function Login() {
             >
                 <div className="card-body">
                     <h2 className="text-center text-white mb-4">
-                        Iniciar Sesión
+                        Crear cuenta
                     </h2>
 
                     <Form method="POST">
@@ -48,14 +48,13 @@ export default function Login() {
                                 htmlFor="email"
                                 className="form-label text-white"
                             >
-                                Email
+                                Correo electrónico
                             </label>
                             <input
-                                type="text"
-                                className="form-control"
+                                type="email"
                                 id="email"
                                 name="email"
-                                required
+                                className="form-control"
                             />
                             {actionData?.detalleErrores?.email && (
                                 <div className="text-danger small mt-1">
@@ -76,6 +75,7 @@ export default function Login() {
                                 id="password"
                                 name="password"
                                 required
+                                minLength={4}
                             />
                             {actionData?.detalleErrores?.password && (
                                 <div className="text-danger small mt-1">
@@ -92,14 +92,8 @@ export default function Login() {
                         )}
                         <div className="text-end">
                             <button type="submit" className="btn btn-bg-m">
-                                Iniciar Sesión
+                                Registrarse
                             </button>
-                        </div>
-                        {/* Botón para ir a signup */}
-                        <div className="text-end mt-3">
-                            <Link to="/signup" className="btn btn-bg-m">
-                                Crear una cuenta
-                            </Link>
                         </div>
                     </Form>
                 </div>

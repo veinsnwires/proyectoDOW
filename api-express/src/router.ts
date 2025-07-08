@@ -15,6 +15,7 @@ const router = Router();
 
 //LOGIN
 router.post('/usuarios/login', login);
+router.post('/usuarios/signup', nuevoUsuario);
 
 //MIDDLEWARE PARA TODOS LOS ENDPOINTS SUBSIGUIENTES
 router.use(verificarToken);
@@ -28,7 +29,6 @@ router.put('/arriendos/devolver/:id', finalizarArriendo);
 router.delete('/arriendos/eliminar/:id', eliminarArriendo);
 
 //USUARIOS
-router.post('/usuarios/signup', nuevoUsuario);
 router.put('/usuarios/cambiar-password', cambiarPassword);
 
 export default router;
