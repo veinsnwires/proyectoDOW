@@ -3,19 +3,18 @@ import { useLoaderData } from 'react-router-dom';
 import type { ArriendoResumenSchema } from '../types/arriendo';
 import { getArriendosPorCategoria } from '../services/ArriendoService';
 import '../css/Categorias.css';
-
+import '../css/Tablas.css';
 const categoriasFijas = ['Sedan', 'SUV', 'Camioneta'];
 
 export async function loader() {
-    const resumen = await getArriendosPorCategoria(); // resumen = array directo
-    console.log('Resumen desde loader:', resumen); // Este sí lo verás en consola
+    const resumen = await getArriendosPorCategoria();
     return resumen;
 }
 
 export default function ArriendosPorCategorias() {
     const resumen = useLoaderData() as ArriendoResumenSchema[];
     console.log('Resumen cargado:', resumen);
-    // Crear un objeto para acceso rápido a cantidad por categoría
+    // PARA OBTENER CANTIDAD POR CATEGORÍA
     const cantidadesMap =
         resumen?.reduce<Record<string, number>>((acc, item) => {
             acc[item.tipoVehiculo] = item.cantidadArriendos;
@@ -28,40 +27,45 @@ export default function ArriendosPorCategorias() {
                 Resumen arriendos por Categoría
             </h2>
 
-            <div className="row">
-                <div className="col-8">
-                    <nav aria-label="breadcrumb">
-                        <ol className="breadcrumb text-white">
-                            <li className="breadcrumb-item">
-                                <Link to="/">Inicio</Link>
-                            </li>
-                            <li
-                                className="breadcrumb-item active text-white"
-                                aria-current="page"
-                            >
-                                Arriendos
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
-                <div className="col-4 text-end">
-                    <Link to="/nuevoarriendo" className="btn btn-primary">
-                        Nuevo arriendo
-                    </Link>
-                </div>
-            </div>
-
             <div className="table-responsive">
-                <table className="table table-bordered table-striped table-hover">
-                    <thead className="table-dark">
+                <table
+                    className="table table-bordered table-striped"
+                    style={{ borderColor: '#8b5e3c' }}
+                >
+                    <thead
+                        style={{ backgroundColor: '#5c4033', color: 'white' }}
+                    >
                         <tr>
-                            <th className="text-center">Tipo de vehículo</th>
-                            <th className="text-center">Cantidad</th>
+                            <th
+                                style={{
+                                    backgroundColor: '#5c4033',
+                                    color: 'white',
+                                }}
+                                className="text-center"
+                            >
+                                Tipo de vehículo
+                            </th>
+                            <th
+                                style={{
+                                    backgroundColor: '#5c4033',
+                                    color: 'white',
+                                }}
+                                className="text-center"
+                            >
+                                Cantidad
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {categoriasFijas.map(categoria => (
-                            <tr key={categoria}>
+                        {categoriasFijas.map((categoria, i) => (
+                            <tr
+                                key={categoria}
+                                style={{
+                                    backgroundColor:
+                                        i % 2 === 0 ? '#f3e5ab' : '#ede0c8',
+                                    borderColor: '#8b5e3c',
+                                }}
+                            >
                                 <td className="text-center">{categoria}</td>
                                 <td className="text-center">
                                     {cantidadesMap[categoria] ?? 0}
@@ -70,6 +74,14 @@ export default function ArriendosPorCategorias() {
                         ))}
                     </tbody>
                 </table>
+                <div className="d-flex justify-content-center mt-4">
+                    <Link
+                        to="/nuevoarriendo"
+                        className="btn btn-lg btn-bg-nuevo"
+                    >
+                        Nuevo arriendo
+                    </Link>
+                </div>
             </div>
         </div>
     );

@@ -34,18 +34,14 @@ export default function Home() {
                         textShadow: '1px 1px 2px rgba(0, 0, 0, 0.9)',
                     }}
                 >
-                    Administra tus vehículos de manera simple y eficiente.
+                    <div>
+                        <span>
+                            {'<Diseño y Programación Orientada a la Web>'}
+                        </span>
+                        <br />
+                        <span>{'Matías Reyes - P301'}</span>
+                    </div>
                 </p>
-                {/* <img
-                    src="/img/yepee.jpg"
-                    className="img-fluid mb-4 rounded shadow-sm"
-                    alt="Portada vehículos"
-                    style={{
-                        maxHeight: '300px',
-                        display: 'block',
-                        margin: '0 auto',
-                    }}
-                /> */}
                 <div className="d-flex justify-content-center gap-3">
                     <Link
                         to="/nuevoarriendo"

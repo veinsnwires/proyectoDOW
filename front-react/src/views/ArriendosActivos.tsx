@@ -5,9 +5,7 @@ import ArriendoFila from '../components/ArriendoFila';
 import '../css/Activos.css';
 
 export async function loader() {
-    console.log('Llamando a getArriendosActivos');
     const activos = await getArriendosActivos();
-    console.log('Activos en loader:', activos); // para verificar que llega el resultado o vacío
     return activos;
 }
 

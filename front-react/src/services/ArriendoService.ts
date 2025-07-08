@@ -1,10 +1,10 @@
-import axios from 'axios';
+import axios from '../services/axiosInstance';
 import { safeParse } from 'valibot';
 import { ArriendoFormSchema, ArriendosSchema } from '../types/arriendo';
 
 export async function getArriendosActivos() {
     try {
-        const url = 'http://localhost:3000/api/arriendos/activos';
+        const url = '/arriendos/activos';
         const { data: arriendos } = await axios.get(url);
         console.log('Datos recibidos del backend:', arriendos);
         const resultado = safeParse(ArriendosSchema, arriendos.data);
@@ -21,7 +21,7 @@ export async function getArriendosActivos() {
 
 export async function getArriendosFinalizados() {
     try {
-        const url = 'http://localhost:3000/api/arriendos/finalizados';
+        const url = '/arriendos/finalizados';
         const { data: arriendos } = await axios.get(url);
         console.log('Datos finalizados desde backend:', arriendos);
         const resultado = safeParse(ArriendosSchema, arriendos.data);
@@ -37,14 +37,17 @@ export async function getArriendosFinalizados() {
 }
 
 export async function getArriendosPorCategoria() {
-    const response = await fetch('http://localhost:3000/api/arriendos/resumen');
-    if (!response.ok) {
+    try {
+        const { data } = await axios.get('/arriendos/resumen');
+        return data;
+    } catch (error: any) {
+        if (error.response?.status === 401 || error.response?.status === 403) {
+            throw new Response('Unauthorized', {
+                status: error.response.status,
+            });
+        }
         throw new Error('No se pudo obtener el resumen');
     }
-
-    const json = await response.json();
-
-    return json;
 }
 
 type ArriendoFormData = {
@@ -54,7 +57,7 @@ type ArriendoFormData = {
 export async function arriendoCrear(formData: ArriendoFormData) {
     try {
         const parsedData = {
-            fechaInicio: new Date().toISOString().split('T')[0], // fecha actual en formato YYYY-MM-DD
+            fechaInicio: new Date().toISOString().split('T')[0], // FECHA FORMA YYYY-MM-DD
             patenteVehiculo: formData.patenteVehiculo.toString(),
             tipoVehiculo: formData.tipoVehiculo.toString(),
             rutCliente: formData.rutCliente.toString(),
@@ -65,10 +68,9 @@ export async function arriendoCrear(formData: ArriendoFormData) {
         console.log('Errores de validación:', resultado.issues);
 
         if (resultado.success) {
-            console.log('API_URL:', import.meta.env.VITE_API_URL);
-            const url = `${import.meta.env.VITE_API_URL}/arriendos/nuevo`;
+            const url = `/arriendos/nuevo`;
 
-            await axios.post(url, resultado.output); // envías todo lo validado
+            await axios.post(url, resultado.output);
             return { success: true };
         } else {
             return {
@@ -87,8 +89,7 @@ export async function arriendoCrear(formData: ArriendoFormData) {
 
 export async function finalizarArriendo(id: number) {
     try {
-        const url = `${import.meta.env.VITE_API_URL}/arriendos/devolver/${id}`;
-        await axios.put(url);
+        await axios.put(`/arriendos/devolver/${id}`);
         return { success: true };
     } catch (error) {
         console.error('Error al finalizar el arriendo:', error);
@@ -98,8 +99,7 @@ export async function finalizarArriendo(id: number) {
 
 export async function eliminarArriendo(id: number) {
     try {
-        const url = `${import.meta.env.VITE_API_URL}/arriendos/eliminar/${id}`;
-        await axios.delete(url);
+        await axios.delete(`/arriendos/eliminar/${id}`);
         return { success: true };
     } catch (error) {
         console.error('Error al eliminar arriendo:', error);

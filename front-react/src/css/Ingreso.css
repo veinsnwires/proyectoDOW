@@ -1,11 +1,21 @@
-.login-bg {
-    background-image: url('/img/poke5.jpg');
+body,
+html {
+    margin: 0;
+    padding: 0;
+}
+.card-background {
+    background-image: url('/img/ingreso.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    border-radius: 0.5rem;
+    color: white;
+}
+.ingreso-background {
+    background: url('/img/poke6.jpg') no-repeat center center fixed;
+    background-size: cover;
     min-height: 100vh;
-    margin: 0;
-    padding: 0;
+    background-color: #8b5e3c;
 }
 .btn-bg-m {
     background-image: url('/img/button.jpg');

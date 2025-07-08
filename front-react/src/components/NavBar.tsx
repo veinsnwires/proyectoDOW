@@ -1,17 +1,27 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../css/NavBar.css';
 
 export default function NavBar() {
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/login');
+    };
+
     return (
         <nav className="navbar navbar-expand-lg navbar-bg-img">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">
                     <img
-                        src="/img/logoUSM.png" // Cambia esto por la ruta correcta de tu logo en la carpeta public
+                        src="/img/logoUSM.png"
                         alt="Logo Universidad"
-                        style={{ height: '80px', marginRight: '8px' }}
+                        style={{
+                            width: '140px',
+                            height: '100px',
+                            marginRight: '40px',
+                        }}
                     />
-                    <span style={{ lineHeight: '80px' }}>Home</span>
+                    <span style={{ lineHeight: '100px' }}>Home</span>
                 </Link>
                 <button
                     className="navbar-toggler"
@@ -47,18 +57,23 @@ export default function NavBar() {
                                 Finalizados
                             </Link>
                         </li>
-                        {/* Aquí puedes agregar más rutas según tus vistas */}
                     </ul>
-                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <Link
-                                className="nav-link btn btn-outline-primary me-2"
-                                to="/login"
-                            >
-                                Iniciar sesión
-                            </Link>
-                        </li>
-                    </ul>
+                    <div className="d-flex ms-auto">
+                        <img
+                            src="../img/logouttext.png"
+                            alt="Texto logout"
+                            style={{
+                                width: 160,
+                                height: 60,
+                                marginRight: 8,
+                            }}
+                        />
+                        <button
+                            className="boton-icono"
+                            onClick={handleLogout}
+                            aria-label="Cerrar sesión"
+                        />
+                    </div>
                 </div>
             </div>
         </nav>

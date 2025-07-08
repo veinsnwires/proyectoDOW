@@ -1,70 +1,101 @@
-import { useState } from 'react';
-import axios from 'axios';
-import type { FormEvent } from 'react';
+import {
+    Form,
+    useActionData,
+    type ActionFunctionArgs,
+    redirect,
+} from 'react-router-dom';
+import { login } from '../services/UsuarioService';
 import '../css/Login.css';
+
+export async function action({ request }: ActionFunctionArgs) {
+    const formData = Object.fromEntries(await request.formData());
+    const resultado = await login(formData);
+
+    if (!resultado.success) {
+        return resultado;
+    }
+
+    return redirect('/');
+}
+
 export default function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [mensaje, setMensaje] = useState('');
-
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-
-        try {
-            const { data } = await axios.post(
-                'http://localhost:3000/api/auth/login',
-                {
-                    email,
-                    password,
-                }
-            );
-
-            setMensaje(data.mensaje);
-            //  Aquí podrías guardar el token en localStorage si es necesario
-        } catch (error: any) {
-            setMensaje(
-                error.response?.data?.error || 'Error al iniciar sesión'
-            );
-        }
+    const actionData = useActionData() as {
+        success?: boolean;
+        error?: string;
+        detalleErrores?: { [key: string]: string[] };
     };
 
     return (
-        // 🔹 Fondo general con imagen (CSS en Login.css)
-        <div className="login-bg d-flex justify-content-center align-items-center">
-            {/* 🔹 Card más chica, centrada */}
+        <div className="login-bg d-flex align-items-center justify-content-center vh-100">
             <div
-                className="bg-success text-white p-4 rounded shadow"
-                style={{ maxWidth: '400px', width: '100%' }}
+                className="card p-4 shadow-lg"
+                style={{
+                    maxWidth: '500px',
+                    width: '90%',
+                    backgroundColor: 'rgba(65, 134, 65, 0.84)',
+                    borderRadius: '1rem',
+                }}
             >
-                <h2>Iniciar sesión</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="form-group mb-2">
-                        <label>Email</label>
-                        <input
-                            type="email"
-                            className="form-control"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                        />
-                    </div>
-                    <div className="form-group mb-2">
-                        <label>Contraseña</label>
-                        <input
-                            type="password"
-                            className="form-control"
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                        />
-                    </div>
-                    <button type="submit" className="btn btn-light fw-bold">
-                        Ingresar
-                    </button>
-                </form>
-                {mensaje && (
-                    <div className="mt-3 alert alert-light text-dark">
-                        {mensaje}
-                    </div>
-                )}
+                <div className="card-body">
+                    <h2 className="text-center text-white mb-4">
+                        Iniciar Sesión
+                    </h2>
+
+                    <Form method="POST">
+                        <div className="mb-3">
+                            <label
+                                htmlFor="email"
+                                className="form-label text-white"
+                            >
+                                Email
+                            </label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="email"
+                                name="email"
+                                required
+                            />
+                            {actionData?.detalleErrores?.email && (
+                                <div className="text-danger small mt-1">
+                                    {actionData.detalleErrores.email.join(', ')}
+                                </div>
+                            )}
+                        </div>
+                        <div className="mb-3">
+                            <label
+                                htmlFor="password"
+                                className="form-label text-white"
+                            >
+                                Contraseña
+                            </label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="password"
+                                name="password"
+                                required
+                            />
+                            {actionData?.detalleErrores?.password && (
+                                <div className="text-danger small mt-1">
+                                    {actionData.detalleErrores.password.join(
+                                        ', '
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                        {actionData?.error && (
+                            <div className="alert alert-danger mt-3">
+                                {actionData.error}
+                            </div>
+                        )}
+                        <div className="text-end">
+                            <button type="submit" className="btn btn-bg-m">
+                                Iniciar Sesión
+                            </button>
+                        </div>
+                    </Form>
+                </div>
             </div>
         </div>
     );

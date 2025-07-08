@@ -17,25 +17,6 @@ export default function ArriendosFinalizados() {
     return (
         <div className="finalizados-bg container-fluid">
             <h2 className="text-white p-2 rounded">Arriendos Finalizados</h2>
-            <div className="row">
-                <div className="col-8">
-                    <nav aria-label="breadcrumb">
-                        <ol className="breadcrumb text-white">
-                            <li className="breadcrumb-item">
-                                <a href="#" className="text-white">
-                                    Inicio
-                                </a>
-                            </li>
-                            <li
-                                className="breadcrumb-item active text-white"
-                                aria-current="page"
-                            >
-                                Finalizados
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
             <div className="table-responsive">
                 <table className="table table-bordered table-striped table-hover">
                     <thead className="table-dark">

@@ -19,12 +19,4 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    line-height: 1;
-}
-
-.navbar-bg-img {
-    background-image: url('/img/navbar.jpg'); /* Ajusta la ruta */
-    background-size: cover; /* Para que cubra todo el navbar */
-    background-repeat: no-repeat;
-    background-position: center;
 }

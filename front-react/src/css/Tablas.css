@@ -1,0 +1,28 @@
+/* Tablas.css */
+.table.tabla-cafe {
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid #8b5e3c;
+}
+
+.table.tabla-cafe thead {
+    background-color: #5c4033 !important;
+    color: #fff !important;
+}
+
+.table.tabla-cafe tbody tr:nth-child(even) {
+    background-color: #f3e5ab !important;
+}
+
+.table.tabla-cafe tbody tr:nth-child(odd) {
+    background-color: #ede0c8 !important;
+}
+
+.table.tabla-cafe td,
+.table.tabla-cafe th {
+    border: 2px solid #8b5e3c !important;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0.75rem !important;
+    font-weight: 500;
+}

@@ -59,7 +59,7 @@ export const getArriendosPorCategoria = async (
             resumen.map(r => r.toJSON())
         );
 
-        response.json(resumen.map(r => r.toJSON())); // <- aquí
+        response.json(resumen.map(r => r.toJSON()));
     } catch (error) {
         console.error('Error al obtener arriendos por categoría:', error);
         response

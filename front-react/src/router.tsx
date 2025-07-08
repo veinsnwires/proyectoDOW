@@ -10,47 +10,55 @@ import ArriendosFinalizados, {
 import ArriendosPorCategorias, {
     loader as loaderCategorias,
 } from './views/ArriendosPorCategorias';
-import Login from './views/Login';
 import CrearArriendo, {
     action as actionCrearArriendo,
 } from './views/CrearArriendo';
+import Login, { action as loginAction } from './views/Login';
 import Loader from './components/Loader';
+import { PrivateRoute } from './components/PrivateRoute';
 
 export const router = createBrowserRouter([
+    {
+        path: 'login',
+        element: <Login />,
+        action: loginAction,
+    },
+
     {
         //URL RAIZ DEL SITIO
         path: '/',
         element: <Layout />,
         HydrateFallback: Loader,
-        //Las vistas que tendrá este layout
+        //VISTAS DEL LAYOUT
         children: [
             {
-                index: true,
-                element: <Home />,
-            },
-            {
-                path: 'login',
-                element: <Login />,
-            },
-            {
-                path: 'arriendosporcategoria',
-                element: <ArriendosPorCategorias />,
-                loader: loaderCategorias,
-            },
-            {
-                path: 'activos',
-                element: <ArriendosActivos />,
-                loader: loaderActivos,
-            },
-            {
-                path: 'finalizados',
-                element: <ArriendosFinalizados />,
-                loader: loaderFinalizados,
-            },
-            {
-                path: 'nuevoarriendo',
-                element: <CrearArriendo />,
-                action: actionCrearArriendo,
+                element: <PrivateRoute />,
+                children: [
+                    {
+                        index: true,
+                        element: <Home />,
+                    },
+                    {
+                        path: 'arriendosporcategoria',
+                        element: <ArriendosPorCategorias />,
+                        loader: loaderCategorias,
+                    },
+                    {
+                        path: 'activos',
+                        element: <ArriendosActivos />,
+                        loader: loaderActivos,
+                    },
+                    {
+                        path: 'finalizados',
+                        element: <ArriendosFinalizados />,
+                        loader: loaderFinalizados,
+                    },
+                    {
+                        path: 'nuevoarriendo',
+                        element: <CrearArriendo />,
+                        action: actionCrearArriendo,
+                    },
+                ],
             },
         ],
     },

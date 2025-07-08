@@ -7,7 +7,7 @@ import {
 type ArriendoFilaProps = {
     index: number;
     arriendo: ArriendoSchema;
-    modo: 'finalizar' | 'eliminar'; //Para las vistas Activos y Finalizados
+    modo: 'finalizar' | 'eliminar';
 };
 
 export default function ArriendoFila({
@@ -24,7 +24,7 @@ export default function ArriendoFila({
                 const resultado = await finalizarArriendo(arriendo.id);
                 if (resultado.success) {
                     alert('Arriendo finalizado correctamente');
-                    location.reload(); // recargar la página para reflejar cambios
+                    location.reload();
                 } else {
                     alert('Error al finalizar el arriendo');
                 }
