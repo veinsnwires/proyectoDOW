@@ -1,13 +1,13 @@
 # ==== Ignorar node_modules en ambas carpetas ====
-api/node_modules/
-frontend/node_modules/
+api-express/node_modules/
+front-react/node_modules/
 
 # ==== Ignorar .env de backend ====
-api/.env
+api-express/.env
 
 # ==== Ignorar dist de frontend ====
-frontend/dist/
-frontend/dist-ssr/
+front-react/dist/
+front-react/dist-ssr/
 
 # ==== Logs generales ====
 logs
